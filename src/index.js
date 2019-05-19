@@ -5,13 +5,14 @@ import App from './components/App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
 import './custom.scss';
-
 import Firebase, { FirebaseContext } from './components/Firebase';
+import Editor from './components/Editor'
 
 ReactDOM.render(
-	<FirebaseContext.Provider value={new Firebase()}>
-		<App />
-	</FirebaseContext.Provider>, document.getElementById('root')
+	// <FirebaseContext.Provider value={new Firebase()}>
+		<Editor />
+	// </FirebaseContext.Provider>
+	, document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
