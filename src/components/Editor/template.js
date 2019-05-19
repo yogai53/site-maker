@@ -1,7 +1,6 @@
 import React from 'react'
 import {Container, Row, Col, Image, Button} from 'react-bootstrap'
 import Carousel from 'react-multi-carousel';
-import ReactQuill from 'react-quill';
 
 import 'font-awesome/css/font-awesome.min.css'; 
 import 'react-quill/dist/quill.snow.css';
@@ -31,7 +30,7 @@ const TemplateIcon = (props) => (
 )
 
 const TemplateVideo = (props) => (
-		<iframe src={props.link} style={{...props.style, borderWidth: '0px'}}>
+		<iframe title={'video'}  src={props.link} style={{...props.style, borderWidth: '0px'}}>
 		</iframe>
 )
 
@@ -77,9 +76,9 @@ const TemplateCarousel = (props) => (
 	>
 		{
 			props.content.map((c, i) => (
-				<React.Fragment>
-					{c.type == 'image' && <TemplateImage {...c}/>}
-					{c.type == 'video' && <TemplateVideo {...c}/>}
+				<React.Fragment key={i}>
+					{c.type === 'image' && <TemplateImage {...c}/>}
+					{c.type === 'video' && <TemplateVideo {...c}/>}
 				</React.Fragment>
 			))
 		}
@@ -89,17 +88,17 @@ const TemplateCarousel = (props) => (
 const TemplateComponent = (props) => (
 	<Col style={{...props.style}}>
 		{
-			props.children.map((child, i) => {
-				if(child.type == 'div') return <TemplateComponent key={i} {...child} /> //Recursion
-
-
-				if(child.type == 'image') return <TemplateImage key={i} {...child}/>
-				if(child.type == 'text') return <TemplateText key={i} {...child}/>
-				if(child.type == 'button') return <TemplateButton key={i}  {...child}/>
-				if(child.type == 'video') return <TemplateVideo key={i} {...child} />
-				if(child.type == 'carousel') return <TemplateCarousel key={i} {...child} />
-				if(child.type == 'icon') return <TemplateIcon key={i} {...child} />
-			})
+			props.children.map((child, i) => (
+				<React.Fragment key={i}>
+					{child.type === 'div' && <TemplateComponent {...child} />} {/**Recursion**/}
+					{child.type === 'image' && <TemplateImage {...child}/>}
+					{child.type === 'text' && <TemplateText {...child}/>}
+					{child.type === 'button' && <TemplateButton  {...child}/>}
+					{child.type === 'video' && <TemplateVideo {...child} />}
+					{child.type === 'carousel' && <TemplateCarousel {...child} />}
+					{child.type === 'icon' && <TemplateIcon {...child} />}
+				</React.Fragment>
+			))
 		}
 	</Col>
 )

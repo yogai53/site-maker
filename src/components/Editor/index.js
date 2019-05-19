@@ -1,26 +1,31 @@
 import React from 'react'
 import {Container, Row, Col} from 'react-bootstrap'
-import {configuration} from '../../templates/market/configuration.js'
 import Template from './template'
+
+import {configuration as marketConfiguration} from '../../templates/market'
 
 class Editor extends React.Component{
 	constructor(props){
 		super(props)
-		this.template = new URLSearchParams(this.props.location.search).get('name')
-		console.log(this.template)
+		this.state={
+			configuration: []
+		}
 	}
+
+	componentDidMount = () => {
+		const template = new URLSearchParams(this.props.location.search).get('name')
+
+		if(template == 'market')
+			this.setState({configuration: marketConfiguration})
+	}
+
 	render(){
-		
 		return(
 			<Container fluid>
 				<Row>
-					<Col>
-					asd
-					</Col>
-				</Row>
-				<Row>
 					<Col md={12} style={{border: '1px solid black', padding: '0px'}}>
-						<Template configuration={configuration}/>
+						{ this.state.configuration.length == 0 && <h4 style={{marginTop: '100px', textAlign: 'center'}}>NOT FOUND</h4>}
+						{ this.state.configuration.length > 0 && <Template configuration={marketConfiguration}/>}
 					</Col>
 				</Row>
 			</Container>
@@ -29,3 +34,4 @@ class Editor extends React.Component{
 }
 
 export default Editor;
+//import ReactQuill from 'react-quill';

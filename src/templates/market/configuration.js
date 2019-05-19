@@ -1,6 +1,5 @@
 const FONT_SIZE = '12px'
 const COLOR = 'black'
-const BG_COLOR = 'blue'
 const BODY_PADDING = '100px'
 const FOOTER_PADDING = '150px'
 export const configuration = [
