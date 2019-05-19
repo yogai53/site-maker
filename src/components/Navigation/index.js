@@ -14,6 +14,7 @@ const NavigationAuthBase = (props) => (
       <Nav className="mr-auto">
         <Nav.Link a="href" onClick={() => props.history.push(ROUTES.ACCOUNT)}>Account</Nav.Link>
         <Nav.Link a="href" onClick={() => props.history.push(ROUTES.HOME)}>Home</Nav.Link>
+        <Nav.Link a="href" onClick={() => props.history.push(ROUTES.TEMPLATE)}>Templates</Nav.Link>
         {/**<NavDropdown title="Dropdown" id="collasible-nav-dropdown">
           <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
           <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>

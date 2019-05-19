@@ -1,10 +1,11 @@
 import React from 'react'
 import {Container, Row, Col, Image, Button} from 'react-bootstrap'
 import Carousel from 'react-multi-carousel';
-import 'react-multi-carousel/lib/styles.css';
-import 'font-awesome/css/font-awesome.min.css'; 
 import ReactQuill from 'react-quill';
+
+import 'font-awesome/css/font-awesome.min.css'; 
 import 'react-quill/dist/quill.snow.css';
+import 'react-multi-carousel/lib/styles.css';
 
 const TemplateImage = (props) => {
 	if(props.link == null)
@@ -20,7 +21,7 @@ const TemplateImage = (props) => {
 }
 
 const TemplateText = (props) => (
-		<span style={props.style}>{props.content}</span>
+	<span style={props.style}>{props.content}</span>
 )
 
 const TemplateIcon = (props) => (
@@ -103,33 +104,20 @@ const TemplateComponent = (props) => (
 	</Col>
 )
 
-class Market extends React.Component{
-	  constructor(props) {
-    super(props)
-    this.state = { text: '' } // You can also pass a Quill Delta here
-    this.handleChange = this.handleChange.bind(this)
-  }
- 
-  handleChange(value) {
-    this.setState({ text: value })
-  }
+class Template extends React.Component{
 	render(){
-		return(
-			<React.Fragment>
-				<Container style={{padding: '0px'}}>
-					{
-						configuration.map((config, i) => (
-							<Row key={`config-${i}`}>
-								<TemplateComponent key={i} {...config}/>
-							</Row>
-						))
-					}
-					<ReactQuill value={this.state.text}
-	                  onChange={this.handleChange} />
-					</Container>
-			</React.Fragment>
+		return (
+			<Container style={{padding: '0px'}}>
+				{
+					this.props.configuration.map((config, i) => (
+						<Row key={`config-${i}`}>
+							<TemplateComponent key={i} {...config}/>
+						</Row>
+					))
+				}
+			</Container>
 		)
 	}
 }
 
-export default Market
+export default Template
