@@ -13,7 +13,7 @@ class Editor extends React.Component{
 	}
 
 	componentDidMount = () => {
-		const template = new URLSearchParams(this.props.location.search).get('name')
+		const template = new URLSearchParams(this.props.location.search).get('template')
 
 		if(template == 'market')
 			this.setState({configuration: marketConfiguration})
