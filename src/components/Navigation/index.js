@@ -15,13 +15,7 @@ const NavigationAuthBase = (props) => (
         <Nav.Link a="href" onClick={() => props.history.push(ROUTES.ACCOUNT)}>Account</Nav.Link>
         <Nav.Link a="href" onClick={() => props.history.push(ROUTES.HOME)}>Home</Nav.Link>
         <Nav.Link a="href" onClick={() => props.history.push(ROUTES.TEMPLATE)}>Templates</Nav.Link>
-        {/**<NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-          <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-        </NavDropdown>**/}
+        <Nav.Link a="href" onClick={() => props.history.push(ROUTES.MYTEMPLATE)}>My Templates</Nav.Link>
       </Nav>
       <Nav>
         <SignOutButton />
@@ -29,22 +23,7 @@ const NavigationAuthBase = (props) => (
     </Navbar.Collapse>
   </Navbar>
 )
-// const NavigationAuth = () => (
-//   <ul>
-//     <li>
-//       <Link to={ROUTES.LANDING}>Landing</Link>
-//     </li>
-//     <li>
-//       <Link to={ROUTES.HOME}>Home</Link>
-//     </li>
-//     <li>
-//       <Link to={ROUTES.ACCOUNT}>Account</Link>
-//     </li>
-//     <li>
-//       <SignOutButton />
-//     </li>
-//   </ul>
-// );
+
 
 const NavigationNonAuthBase = (props) => (
   <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
@@ -52,15 +31,6 @@ const NavigationNonAuthBase = (props) => (
     <Navbar.Toggle aria-controls="responsive-navbar-nav" />
     <Navbar.Collapse id="responsive-navbar-nav">
       <Nav className="mr-auto">
-        {/**<Nav.Link a="href" onClick={() => props.history.push(ROUTES.ACCOUNT)}>Account</Nav.Link>
-        <Nav.Link a="href" onClick={() => props.history.push(ROUTES.HOME)}>Home</Nav.Link>
-        <NavDropdown title="Dropdown" id="collasible-nav-dropdown">
-          <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-          <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-          <NavDropdown.Divider />
-          <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-        </NavDropdown>**/}
       </Nav>
       <Nav>
         <Nav.Link a="href" onClick={() => props.history.push(ROUTES.SIGN_IN)}>Login</Nav.Link>

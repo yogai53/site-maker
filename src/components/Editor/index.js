@@ -98,9 +98,8 @@ class Editor extends React.Component{
 	}
 
 	render(){
-		console.log('-')
 		return(
-			<Container fluid>
+			<Container fluid className='editor'>
 				<Row>
 					<Col md={12} style={{border: '1px solid black', padding: '0px'}}>
 						{ this.state.configuration.length == 0 && <h4 style={{marginTop: '100px', textAlign: 'center'}}>NOT FOUND</h4>}

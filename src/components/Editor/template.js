@@ -25,7 +25,7 @@ const TemplateText = (props) => (
 	<TemplateContext.Consumer>
 		{context => <React.Fragment>
 			{ props.editor == true &&  <div ref={context.activeTextEditorRef}><ReactQuill  value={props.content} onChange={(value) => context.handleTextChange(props.id, value)} /> </div>}
-			{ props.editor == false &&  <span dangerouslySetInnerHTML={{__html: props.content}} onClick={() => context.handleTextClick(props.id)} style={props.style}></span> }
+			{ props.editor == false &&  <span dangerouslySetInnerHTML={{__html: props.content}} className="templateTextSpan" onClick={() => context.handleTextClick(props.id)} style={props.style}></span> }
 		</React.Fragment>}
 	</TemplateContext.Consumer>
 )

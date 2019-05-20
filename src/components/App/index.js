@@ -10,6 +10,7 @@ import AccountPage from '../Account';
 import AdminPage from '../Admin';
 import EditorPage from '../Editor';
 import TemplatePage from '../Template';
+import MyTemplatePage from '../MyTemplate';
 import * as ROUTES from '../../constants/routes';
 import { withAuthentication } from '../Session';
 
@@ -27,6 +28,7 @@ const App = () => (
       <Route path={ROUTES.ADMIN} component={AdminPage} />
       <Route path={ROUTES.EDITOR} component={EditorPage} />
       <Route path={ROUTES.TEMPLATE} component={TemplatePage} />
+      <Route path={ROUTES.MYTEMPLATE} component={MyTemplatePage} />
     </div>
   </Router>
 );

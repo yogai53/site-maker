@@ -16,3 +16,15 @@ code {
 	background: grey;
 	border: 1px solid blue;
 }
+
+.templateTextSpan
+{
+  display: block;
+}
+.templateTextSpan:hover{
+  border: 1px solid #cacaca;
+}
+
+.editor p{
+  margin: 0px;
+}
