@@ -97,6 +97,23 @@ class Editor extends React.Component{
 		}
 	}
 
+	handleElementSwap = (dragId, dropId) => {
+		if(dragId == dropId) return
+		let configuration = this.state.configuration.slice()
+		let dragConfiguration = configuration.filter(c => c.id == dragId)[0]
+		configuration = configuration.filter(c => c.id != dragId)
+
+		for(let i = 0; i < configuration.length; i++){
+			if(configuration[i].id == dropId)
+			{
+				configuration.splice(i, 0, dragConfiguration)
+				break;
+			}
+		}
+
+		this.setState({configuration: configuration})
+	}
+
 	render(){
 		return(
 			<Container fluid className='editor'>
@@ -105,7 +122,7 @@ class Editor extends React.Component{
 						{ this.state.configuration.length == 0 && <h4 style={{marginTop: '100px', textAlign: 'center'}}>NOT FOUND</h4>}
 						{ this.state.configuration.length > 0 && 
 							<TemplateContext.Provider value={this.state}>
-								<Template handleTextChange={this.handleTextChange} configuration={marketConfiguration}/>
+								<Template handleElementSwap={this.handleElementSwap} handleTextChange={this.handleTextChange} configuration={this.state.configuration}/>
 							</TemplateContext.Provider>
 						}
 					</Col>

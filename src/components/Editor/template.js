@@ -8,6 +8,7 @@ import 'font-awesome/css/font-awesome.min.css';
 import 'react-quill/dist/quill.snow.css';
 import 'react-multi-carousel/lib/styles.css';
 
+const InternalTemplate = React.createContext();
 const TemplateImage = (props) => {
 	if(props.link == null)
 	{
@@ -23,10 +24,18 @@ const TemplateImage = (props) => {
 
 const TemplateText = (props) => (
 	<TemplateContext.Consumer>
-		{context => <React.Fragment>
-			{ props.editor == true &&  <div ref={context.activeTextEditorRef}><ReactQuill  value={props.content} onChange={(value) => context.handleTextChange(props.id, value)} /> </div>}
-			{ props.editor == false &&  <span dangerouslySetInnerHTML={{__html: props.content}} className="templateTextSpan" onClick={() => context.handleTextClick(props.id)} style={props.style}></span> }
-		</React.Fragment>}
+		{context => 
+			<InternalTemplate.Consumer>
+				{internalTemplateContext => <React.Fragment>
+					{ props.editor == true &&  <div ref={context.activeTextEditorRef}><ReactQuill  value={props.content} onChange={(value) => context.handleTextChange(props.id, value)} /> </div>}
+					{ props.editor == false &&  <span 
+													dangerouslySetInnerHTML={{__html: props.content}} 
+													className="templateTextSpan" 
+													onClick={() => context.handleTextClick(props.id)} style={props.style}></span> 
+												}
+				</React.Fragment>}
+			</InternalTemplate.Consumer>
+		}
 	</TemplateContext.Consumer>
 )
 
@@ -37,12 +46,12 @@ const TemplateIcon = (props) => (
 )
 
 const TemplateVideo = (props) => (
-		<iframe title={'video'}  src={props.link} style={{...props.style, borderWidth: '0px'}}>
+		<iframe  title={'video'}  src={props.link} style={{...props.style, borderWidth: '0px'}}>
 		</iframe>
 )
 
 const TemplateButton = (props) => (
-		<Button onClick={() => {window.location = props.link}} style={props.style}>{props.content}</Button>
+		<Button  onClick={() => {window.location = props.link}} style={props.style}>{props.content}</Button>
 )
 
 const responsive = {
@@ -64,7 +73,7 @@ const TemplateCarousel = (props) => (
 
 	<Carousel
 	  swipeable={false}
-	  draggable={false}
+	  draggable={true}
 	  showDots={true}
 	  responsive={responsive}
 	  ssr={true} // means to render carousel on server-side.
@@ -93,31 +102,62 @@ const TemplateCarousel = (props) => (
 )
 
 const TemplateComponent = (props) => (
-	<Col style={{...props.style}}>
-		{
-			props.children.map((child, i) => (
-				<React.Fragment key={i}>
-					{child.type === 'div' && <TemplateComponent {...child} />} {/**Recursion**/}
-					{child.type === 'image' && <TemplateImage {...child}/>}
-					{child.type === 'text' && <TemplateText handleTextChange={props.handleTextChange} {...child}/>}
-					{child.type === 'button' && <TemplateButton  {...child}/>}
-					{child.type === 'video' && <TemplateVideo {...child} />}
-					{child.type === 'carousel' && <TemplateCarousel {...child} />}
-					{child.type === 'icon' && <TemplateIcon {...child} />}
-				</React.Fragment>
-			))
-		}
-	</Col>
+	<InternalTemplate.Consumer>
+				{internalTemplateContext =>
+				<Col draggable 
+					onDragEnter={e=>internalTemplateContext.handleDragEnter(e)} 
+					onDrop={e => internalTemplateContext.handleDragDrop(e, props.id)} 
+					onDragOver={(e) => internalTemplateContext.handleDragOver(e)} 
+					onDragStart={(e) => internalTemplateContext.handleDragStart(e, props.id)} 
+					style={{...props.style}}
+				>
+					{
+						props.children.map((child, i) => (
+							<React.Fragment key={i}>
+								{child.type === 'div' && <TemplateComponent  {...child} />} {/**Recursion**/}
+								{child.type === 'image' && <TemplateImage  {...child}/>}
+								{child.type === 'text' && <TemplateText  handleTextChange={props.handleTextChange} {...child}/>}
+								{child.type === 'button' && <TemplateButton   {...child}/>}
+								{child.type === 'video' && <TemplateVideo  {...child} />}
+								{child.type === 'carousel' && <TemplateCarousel  {...child} />}
+								{child.type === 'icon' && <TemplateIcon  {...child} />}
+							</React.Fragment>
+						))
+					}
+				</Col>}
+	</InternalTemplate.Consumer>
 )
 
 class Template extends React.Component{
-	// componentDidMount(){
-	// 	document.addEventListener('mousedown', this.handleClick, false)
-	// }
+	constructor(props){
+		super(props)
+		this.state = {
+			handleDragStart: this.handleDragStart,
+			handleDragEnter: this.handleDragEnter, 
+			handleDragOver: this.handleDragOver, 
+			handleDragDrop: this.handleDragDrop
+		}
+	}
+	handleDragStart = (e, id) => {
+		e.dataTransfer.effectAllowed='move';
+		e.dataTransfer.setData("Text", id);
+		return true;
+	}
 
-	// componentDidUnmount(){
-	// 	document.removeEventListener('mousedown', this.handleClick, false)
-	// }
+	handleDragEnter = (e) => {
+		e.preventDefault()
+		return true;
+	}
+
+	handleDragOver = (e) => {
+		e.preventDefault()
+		return false
+	}
+
+	handleDragDrop = (e, dropId) => {
+		const dragId = e.dataTransfer.getData("Text");
+		this.props.handleElementSwap(dragId, dropId)
+	}
 
 	render(){
 		return (
@@ -125,7 +165,9 @@ class Template extends React.Component{
 				{
 					this.props.configuration.map((config, i) => (
 						<Row key={`config-${i}`}>
-							<TemplateComponent key={i} {...config}/>
+							<InternalTemplate.Provider value={this.state}> 
+								<TemplateComponent handleDragStart={this.handleDragStart} key={i} {...config}/>
+							</InternalTemplate.Provider>
 						</Row>
 					))
 				}
