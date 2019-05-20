@@ -83,6 +83,7 @@ export const configuration = [
 							children: [
 								{
 									type: 'text',
+									editor: false,
 									content: 'John | Marketing executive officer|Email yoga@tesark.in|Tel: 9790614535', 
 									style: {color: COLOR, fontSize: FONT_SIZE, display: 'inline-block'}
 								}				
@@ -99,11 +100,13 @@ export const configuration = [
 		children: [
 			{
 				type: 'text',
+				editor: false,
 				content: 'Lorem Ipsum',
 				style: {color: COLOR, fontSize: FONT_SIZE + 2, fontWeight: 800, display: 'block'}
 			},
 			{
 				type: 'text',
+				editor: false,
 				content: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.',
 				style: {color: COLOR, fontSize: FONT_SIZE, display: 'block'}
 			}
@@ -175,6 +178,7 @@ export const configuration = [
 		children: [
 			{
 				type: 'text',
+				editor: false,
 				content: 'Lorem Ipsum',
 				style: {color: COLOR, fontSize: FONT_SIZE + 2}
 			}
@@ -198,6 +202,7 @@ export const configuration = [
 						},
 						caption: {
 							type: 'text',
+							editor: false,
 							content: 'Content 1',
 							style: {color: COLOR, fontSize: FONT_SIZE}
 						}			
@@ -212,6 +217,7 @@ export const configuration = [
 						},
 						caption: {
 							type: 'text',
+							editor: false,
 							content: 'Content 1',
 							style: {color: COLOR, fontSize: FONT_SIZE}
 						}			
@@ -226,6 +232,7 @@ export const configuration = [
 						},
 						caption: {
 							type: 'text',
+							editor: false,
 							content: 'Content 1',
 							style: {color: COLOR, fontSize: FONT_SIZE}
 						}			
@@ -242,6 +249,7 @@ export const configuration = [
 		children: [
 			{
 				type: 'text',
+				editor: false,
 				content: 'The carousel is a slideshow for cycling through a series of content, built with CSS 3D transforms and a bit of JavaScript. It works with a series of images, text, or custom markup.',
 				style: {fontSize: FONT_SIZE}
 			}

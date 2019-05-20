@@ -1,6 +1,8 @@
 import React from 'react'
 import {Container, Row, Col, Image, Button} from 'react-bootstrap'
 import Carousel from 'react-multi-carousel';
+import ReactQuill from 'react-quill';
+import TemplateContext from './template-context'
 
 import 'font-awesome/css/font-awesome.min.css'; 
 import 'react-quill/dist/quill.snow.css';
@@ -20,7 +22,12 @@ const TemplateImage = (props) => {
 }
 
 const TemplateText = (props) => (
-	<span style={props.style}>{props.content}</span>
+	<TemplateContext.Consumer>
+		{context => <React.Fragment>
+			{ props.editor == true &&  <div ref={context.activeTextEditorRef}><ReactQuill  value={props.content} onChange={(value) => context.handleTextChange(props.id, value)} /> </div>}
+			{ props.editor == false &&  <span dangerouslySetInnerHTML={{__html: props.content}} onClick={() => context.handleTextClick(props.id)} style={props.style}></span> }
+		</React.Fragment>}
+	</TemplateContext.Consumer>
 )
 
 const TemplateIcon = (props) => (
@@ -92,7 +99,7 @@ const TemplateComponent = (props) => (
 				<React.Fragment key={i}>
 					{child.type === 'div' && <TemplateComponent {...child} />} {/**Recursion**/}
 					{child.type === 'image' && <TemplateImage {...child}/>}
-					{child.type === 'text' && <TemplateText {...child}/>}
+					{child.type === 'text' && <TemplateText handleTextChange={props.handleTextChange} {...child}/>}
 					{child.type === 'button' && <TemplateButton  {...child}/>}
 					{child.type === 'video' && <TemplateVideo {...child} />}
 					{child.type === 'carousel' && <TemplateCarousel {...child} />}
@@ -104,6 +111,14 @@ const TemplateComponent = (props) => (
 )
 
 class Template extends React.Component{
+	// componentDidMount(){
+	// 	document.addEventListener('mousedown', this.handleClick, false)
+	// }
+
+	// componentDidUnmount(){
+	// 	document.removeEventListener('mousedown', this.handleClick, false)
+	// }
+
 	render(){
 		return (
 			<Container style={{padding: '0px'}}>
