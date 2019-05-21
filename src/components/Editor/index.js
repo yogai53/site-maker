@@ -1,8 +1,10 @@
 import React from 'react'
-import {Container, Row, Col} from 'react-bootstrap'
+import {Container, Row, Col, Button} from 'react-bootstrap'
 import Template from './template'
 import TemplateContext from './template-context'
 import {configuration as marketConfiguration} from '../../templates/market'
+import { withFirebase } from '../Firebase';
+import { withAuthorization } from '../Session';
 
 class Editor extends React.Component{
 	constructor(props){
@@ -26,7 +28,6 @@ class Editor extends React.Component{
 
 		this.attachIdForConfiguration(marketConfiguration)
 		this.setState({activeTextEditorRef: React.createRef()})
-		
 	}
 
 	attachIdForConfiguration = (configuration) => {
@@ -70,6 +71,7 @@ class Editor extends React.Component{
 
 	componentWillUnmount(){
 		document.removeEventListener('mousedown', this.handleClickOutside, false)
+		this.props.firebase.users().off();
 	}
 
 	closeAllTextEditors = (configuration) => {
@@ -114,10 +116,27 @@ class Editor extends React.Component{
 		this.setState({configuration: configuration})
 	}
 
+	saveTemplate = () => {
+		let username = ''
+		let email = ''
+		this.props.firebase.user(this.props.authUser.uid).once('value').then(snapshot =>  {
+		  	username = (snapshot.val() && snapshot.val().username) || 'Anonymous';
+		 	email = (snapshot.val() && snapshot.val().email) || 'Anonymous';
+		 	this.props.firebase.user(this.props.authUser.uid).set({
+				template: this.state.configuration,
+				username: username,
+				email: email
+			})
+		});
+	}
+
 	render(){
 		return(
 			<Container fluid className='editor'>
 				<Row>
+					<Col md={12}>
+						<Button onClick={() => this.saveTemplate()} style={{float: 'right'}}> Save </Button>
+					</Col>
 					<Col md={12} style={{border: '1px solid black', padding: '0px'}}>
 						{ this.state.configuration.length == 0 && <h4 style={{marginTop: '100px', textAlign: 'center'}}>NOT FOUND</h4>}
 						{ this.state.configuration.length > 0 && 
@@ -132,5 +151,6 @@ class Editor extends React.Component{
 	}
 }
 
-export default Editor;
-//import ReactQuill from 'react-quill';
+const condition = authUser => !!authUser;
+
+export default withAuthorization(condition)(withFirebase(Editor));

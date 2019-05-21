@@ -121,7 +121,7 @@ export const configuration = [
 		children: [
 			{
 				type: 'video',
-				link: 'https://www.youtube.com/embed/tgbNymZ7vqY',
+				link: 'https://www.youtube.com/embed/rlR4PJn8b8I',
 				style: {
 					height: '400px',
 					width: '100%'

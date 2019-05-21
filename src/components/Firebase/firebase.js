@@ -1,6 +1,7 @@
 import app from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import 'firebase/firestore';
 // const prodConfig = {
 //   apiKey: process.env.REACT_APP_PROD_API_KEY,
 //   authDomain: process.env.REACT_APP_PROD_AUTH_DOMAIN,
